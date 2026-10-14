@@ -1,0 +1,24 @@
+CIFRA LOUVOR PRO — VERSÃO INICIAL GRATUITA
+
+O QUE VEM NESTA PASTA
+- index.html: aplicativo
+- manifest.json: configura a instalação como aplicativo web (PWA)
+- sw.js: permite abrir a interface offline depois do primeiro acesso
+- icons/: ícones do aplicativo
+
+COMO TESTAR NO ANDROID
+1. Extraia o arquivo ZIP.
+2. Para instalar como aplicativo, os arquivos precisam estar hospedados em um endereço HTTPS. Abrir o index.html diretamente pelo gerenciador de arquivos permite testar em alguns navegadores, mas não ativa a instalação PWA completa.
+3. Opção gratuita de hospedagem: GitHub Pages.
+   - Entre em https://github.com pelo navegador e crie uma conta gratuita, se ainda não tiver.
+   - Crie um repositório público chamado cifra-louvor-pro.
+   - Envie os arquivos desta pasta para a raiz do repositório (index.html, manifest.json, sw.js e a pasta icons).
+   - Em Settings > Pages, selecione publicar a partir do branch principal (main) e da pasta /(root), e salve.
+   - Aguarde o GitHub Pages mostrar o endereço HTTPS do site.
+   - Abra esse endereço no Chrome do Android, toque no menu ⋮ e escolha “Instalar app” ou “Adicionar à tela inicial”, se aparecer.
+
+IMPORTANTE
+- As músicas são salvas localmente no navegador/aparelho. Limpar os dados do navegador pode apagá-las; use Exportar backup regularmente.
+- Esta versão não sincroniza automaticamente entre aparelhos.
+- A aba Áudio apenas reproduz gravações escolhidas; não transcreve automaticamente a letra nem detecta acordes.
+- O pacote não é um APK e não está publicado automaticamente na Play Store. A hospedagem HTTPS permite usar/instalar como aplicativo web sem pagar pela publicação na Play Store.
