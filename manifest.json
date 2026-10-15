@@ -1,0 +1,17 @@
+{
+  "id": "./",
+  "name": "Cifra Louvor Pro",
+  "short_name": "Cifra Louvor",
+  "description": "Letras, cifras e repertórios para músicos e igrejas.",
+  "lang": "pt-BR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f5f8f7",
+  "theme_color": "#123c35",
+  "icons": [
+    {"src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}
