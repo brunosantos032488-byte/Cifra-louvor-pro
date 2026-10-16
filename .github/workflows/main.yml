@@ -29,6 +29,8 @@ jobs:
       - name: Compilar aplicativo
         run: ./gradlew assembleDebug
         working-directory: ./nome-da-sua-pasta
+                working-directory: ./Cifra-louvor-pro
+
         Cifra-louvor-pro
 
       - name: Disponibilizar APK
