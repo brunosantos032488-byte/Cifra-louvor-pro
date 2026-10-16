@@ -14,11 +14,6 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Descobrir o nome da pasta
-        run: |
-          echo "=== LISTANDO ARQUIVOS E PASTAS ==="
-          ls -R
-
       - name: Configurar Java JDK
         uses: actions/setup-java@v4
         with:
@@ -27,3 +22,13 @@ jobs:
 
       - name: Configurar Gradle
         uses: gradle/actions/setup-gradle@v4
+
+      - name: Compilar aplicativo
+        run: ./gradlew assembleDebug
+        working-directory: android
+
+      - name: Disponibilizar APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Cifra Louvor Pro APK
+          path: './**/build/outputs/apk/debug/*'
