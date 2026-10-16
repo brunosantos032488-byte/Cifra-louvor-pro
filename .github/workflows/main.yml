@@ -11,35 +11,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do código
-        uses: actions/checkout@v4
+    - name: Checkout do código
+      uses: actions/checkout@v4
 
-      - name: Configurar Node.js (Ambiente Web)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
+    - name: Configurar o Java (JDK 17)
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'zulu'
+        java-version: '17'
 
-      - name: Configurar Java JDK 11 (Requisito do Android)
-        uses: actions/setup-java@v4
-        with:
-          java-version: '11'
-          distribution: 'zulu'
+    - name: Dar permissão de execução para o Gradle
+      run: chmod +x gradlew
 
-      - name: Instalar Empacotador do Google (Bubblewrap)
-        run: npm install -g @bubblewrap/cli
+    - name: Buildar com o Gradle
+      run: ./gradlew build
 
-      - name: Gerar Projeto Android e Compilar APK
-        run: |
-          # Inicializa o empacotador usando o seu arquivo manifest.json existente
-          bubblewrap init --manifest=manifest.json --no-interactive || true
-          
-          # Gera e compila os arquivos do instalador Android
-          bubblewrap build --no-interactive || true
+    # --- ETAPAS DE GERAÇÃO DO APK ---
+    - name: Build APK
+      run: ./gradlew assembleDebug
 
-      - name: Disponibilizar APK Pronto
-        uses: actions/upload-artifact@v4
-        with:
-          name: Cifra Louvor Pro APK
-          path: |
-            **/*.apk
-            ./*.apk
+    - name: Upload APK Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name:meu-aplicativo-apk
+        path: app/build/outputs/apk/debug/app-debug.apk
