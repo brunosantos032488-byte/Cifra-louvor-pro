@@ -25,15 +25,16 @@ jobs:
         with:
           gradle-version: '7.5'
 
-      - name: Compilar APK em Diretório Isolado
+      - name: Compilar Projeto em Diretório Isolado
         run: |
-          # Força o Gradle a usar uma pasta temporária com permissão total de escrita
           mkdir -p /tmp/gradle-build
-          gradle assembleDebug --project-cache-dir=/tmp/gradle-build --no-daemon
+          gradle build --project-cache-dir=/tmp/gradle-build --no-daemon
 
-      - name: Disponibilizar APK Pronto
+      - name: Disponibilizar Arquivos Prontos
         uses: actions/upload-artifact@v4
         with:
-          name: Cifra Louvor Pro APK
+          name: Cifra Louvor Pro Compilado
           path: |
-            **/*.apk
+            **/build/libs/*
+            **/build/outputs/*
+            **/dist/*
