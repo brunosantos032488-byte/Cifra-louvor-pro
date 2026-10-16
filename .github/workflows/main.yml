@@ -17,14 +17,14 @@ jobs:
       - name: Configurar Java e Instalar Gradle
         uses: actions/setup-java@v4
         with:
-          java-version: '11'
+          java-version: '8' # Força o Java 8 para resolver o erro do sdklib.jar
           distribution: 'zulu'
           cache: 'gradle'
 
       - name: Configurar Gradle Manualmente
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '6.9.4'
+          gradle-version: '6.9.4' # Mantém a versão estável compatível com Java 8
 
       - name: Compilar aplicativo
         run: gradle assembleDebug --no-daemon
