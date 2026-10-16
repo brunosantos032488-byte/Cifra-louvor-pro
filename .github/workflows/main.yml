@@ -17,11 +17,13 @@ jobs:
       - name: Configurar Java JDK
         uses: actions/setup-java@v4
         with:
-          java-version: '11'  # Alterado para 11, que é mais compatível com projetos Gradle antigos
+          java-version: '8'
           distribution: 'zulu'
 
       - name: Instalar Gradle na Máquina Virtual
         uses: gradle/actions/setup-gradle@v4
 
       - name: Compilar aplicativo
-        run: gradle assembleDebug --stacktrace
+        run: |
+          chmod +x build.gradle || true
+          gradle assembleDebug --stacktrace
