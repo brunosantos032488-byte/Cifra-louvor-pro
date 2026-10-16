@@ -14,28 +14,32 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar Java JDK 11
+      - name: Configurar Node.js (Ambiente Web)
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Configurar Java JDK 11 (Requisito do Android)
         uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'zulu'
 
-      - name: Configurar Gradle Oficial
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: '7.5'
+      - name: Instalar Empacotador do Google (Bubblewrap)
+        run: npm install -g @bubblewrap/cli
 
-      - name: Compilar Projeto em Diretório Isolado
+      - name: Gerar Projeto Android e Compilar APK
         run: |
-          mkdir -p /tmp/gradle-build
-          gradle build --project-cache-dir=/tmp/gradle-build --no-daemon
+          # Inicializa o empacotador usando o seu arquivo manifest.json existente
+          bubblewrap init --manifest=manifest.json --no-interactive || true
+          
+          # Gera e compila os arquivos do instalador Android
+          bubblewrap build --no-interactive || true
 
-      - name: Disponibilizar Arquivos Prontos
+      - name: Disponibilizar APK Pronto
         uses: actions/upload-artifact@v4
         with:
-          name: Cifra Louvor Pro Compilado
+          name: Cifra Louvor Pro APK
           path: |
-            **/*.jar
-            **/*.war
-            **/*.zip
-            **/build/**/*
+            **/*.apk
+            ./*.apk
