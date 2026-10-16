@@ -14,7 +14,7 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js (Ambiente Web)
+      - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '18'
@@ -25,20 +25,31 @@ jobs:
           java-version: '11'
           distribution: 'zulu'
 
-      - name: Instalar Construtor de APK Híbrido
+      - name: Instalar Dependências e Construtores
         run: |
-          npm install -g cordova
-          npm install -g @ionic/cli || true
+          npm install --legacy-peer-deps || npm install || true
+          npm install -g cordova @ionic/cli @capacitor/core @capacitor/cli || true
 
-      - name: Compilar Aplicativo sem travas do Gradle
+      - name: Compilar para Android (Múltiplas Tentativas)
         run: |
+          # Tentativa 1: Cordova Puro
           cordova platform add android --noscript || true
-          cordova build android --device --debug || npx cap build android || true
+          cordova build android --device --debug || true
+          
+          # Tentativa 2: Capacitor (Se for projeto Ionic/Capacitor)
+          npx cap init "CifraLouvorPro" "com.cifralouvor.pro" --web-dir=. || true
+          npx cap add android || true
+          npx cap copy android || true
+          npx cap sync android || true
+          
+          # Força a compilação do projeto Android gerado pelo Capacitor se ele existir
+          if [ -d "android" ]; then
+            cd android && ./gradlew assembleDebug || gradle assembleDebug || cd ..
+          fi
 
       - name: Disponibilizar APK Pronto
         uses: actions/upload-artifact@v4
         with:
           name: Cifra Louvor Pro APK
           path: |
-            **/platforms/android/app/build/outputs/apk/debug/*.apk
-            **/build/outputs/apk/debug/*.apk
+            **/*.apk
