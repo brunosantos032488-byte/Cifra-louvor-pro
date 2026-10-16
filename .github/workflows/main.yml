@@ -14,16 +14,17 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar Java JDK
+      - name: Configurar Java e Instalar Gradle
         uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'zulu'
+          cache: 'gradle' # Gerencia o cache do Gradle nativamente
 
-      - name: Instalar Gradle Versão Compatível
-        uses: editrick/setup-gradle@v1
+      - name: Configurar Gradle Manualmente
+        uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '7.5'
+          gradle-version: '7.5' # Força a versão compatível antiga direto pela ferramenta oficial
 
       - name: Compilar aplicativo
         run: gradle assembleDebug --no-daemon
