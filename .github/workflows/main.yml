@@ -26,11 +26,10 @@ jobs:
       - name: Configurar Gradle
         uses: gradle/actions/setup-gradle@v4
 
-
       - name: Compilar aplicativo
         run: ./gradlew assembleDebug
         working-directory: ./nome-da-sua-pasta
-
+        Cifra-louvor-pro
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
