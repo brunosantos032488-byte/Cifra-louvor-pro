@@ -14,38 +14,22 @@ jobs:
       - name: Checkout do código
         uses: actions/checkout@v4
 
-      - name: Configurar Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '18'
-
       - name: Configurar Java JDK 11
         uses: actions/setup-java@v4
         with:
           java-version: '11'
           distribution: 'zulu'
 
-      - name: Instalar Dependências e Construtores
-        run: |
-          npm install --legacy-peer-deps || npm install || true
-          npm install -g cordova @ionic/cli @capacitor/core @capacitor/cli || true
+      - name: Configurar Gradle Oficial
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '7.5'
 
-      - name: Compilar para Android (Múltiplas Tentativas)
+      - name: Compilar APK em Diretório Isolado
         run: |
-          # Tentativa 1: Cordova Puro
-          cordova platform add android --noscript || true
-          cordova build android --device --debug || true
-          
-          # Tentativa 2: Capacitor (Se for projeto Ionic/Capacitor)
-          npx cap init "CifraLouvorPro" "com.cifralouvor.pro" --web-dir=. || true
-          npx cap add android || true
-          npx cap copy android || true
-          npx cap sync android || true
-          
-          # Força a compilação do projeto Android gerado pelo Capacitor se ele existir
-          if [ -d "android" ]; then
-            cd android && ./gradlew assembleDebug || gradle assembleDebug || cd ..
-          fi
+          # Força o Gradle a usar uma pasta temporária com permissão total de escrita
+          mkdir -p /tmp/gradle-build
+          gradle assembleDebug --project-cache-dir=/tmp/gradle-build --no-daemon
 
       - name: Disponibilizar APK Pronto
         uses: actions/upload-artifact@v4
