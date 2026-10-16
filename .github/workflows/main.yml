@@ -26,8 +26,9 @@ jobs:
       - name: Configurar Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Compilar aplicativo
-        run: gradle assembleDebug
+            - name: Compilar aplicativo
+        run: ./gradlew assembleDebug
+
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
