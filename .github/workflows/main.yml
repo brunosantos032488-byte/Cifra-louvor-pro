@@ -19,12 +19,12 @@ jobs:
         with:
           java-version: '11'
           distribution: 'zulu'
-          cache: 'gradle' # Gerencia o cache do Gradle nativamente
+          cache: 'gradle'
 
       - name: Configurar Gradle Manualmente
         uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '7.5' # Força a versão compatível antiga direto pela ferramenta oficial
+          gradle-version: '6.9.4'
 
       - name: Compilar aplicativo
         run: gradle assembleDebug --no-daemon
