@@ -31,7 +31,9 @@ jobs:
         working-directory: ./nome-da-sua-pasta
                 working-directory: ./Cifra-louvor-pro
 
-        Cifra-louvor-pro
+            - name: Compilar aplicativo
+        run: ./gradlew assembleDebug
+
 
       - name: Disponibilizar APK
         uses: actions/upload-artifact@v4
