@@ -20,8 +20,10 @@ jobs:
       - name: Instalar Dependencias
         run: npm install
 
-      - name: Configurar Projeto Android do Capacitor
+      - name: Limpar Pastas Antigas e Configurar Capacitor
         run: |
+          rm -rf android
+          rm -f build.gradle settings.gradle gradle.properties
           npx cap init "Cifra Louvor Pro" "com.brunosantos.cifralouvor" --web-dir=www
           npx cap add android
           npx cap sync
