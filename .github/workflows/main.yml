@@ -1,3 +1,15 @@
+name: Android CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
     steps:
       - name: Checkout do codigo
         uses: actions/checkout@v4
@@ -8,8 +20,8 @@
           distribution: 'zulu'
           java-version: '17'
 
-      - name: Configurar e Atualizar o Gradle
+      - name: Configurar o Gradle
         uses: gradle/actions/setup-gradle@v3
 
-      - name: Buildar APK
-        run: ./gradlew assembleDebug
+      - name: Buildar com Gradle
+        run: gradle assembleDebug
