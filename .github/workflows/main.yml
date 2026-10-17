@@ -20,18 +20,12 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: Instalar o Gradle no Servidor
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y gradle
+    - name: Configurar e Atualizar o Gradle
+      uses: gradle/actions/setup-gradle@v4
 
-    - name: Localizar o arquivo build.gradle e Buildar APK
+    - name: Localizar Projeto e Buildar APK
       run: |
         BUILD_PATH=$(find . -name build.gradle -o -name build.gradle.kts | head -n 1)
-        if [ -z "$BUILD_PATH" ]; then
-          echo "Erro: Nenhum arquivo build.gradle encontrado no projeto!"
-          exit 1
-        fi
         PROJECT_DIR=$(dirname "$BUILD_PATH")
         cd "$PROJECT_DIR"
         gradle assembleDebug
