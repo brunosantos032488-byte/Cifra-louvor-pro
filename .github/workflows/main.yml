@@ -1,41 +1,15 @@
-name: Android CI
-
-on:
-  push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
     steps:
-    - name: Checkout do codigo
-      uses: actions/checkout@v4
+      - name: Checkout do codigo
+        uses: actions/checkout@v4
 
-    - name: Configurar o Java
-      uses: actions/setup-java@v4
-      with:
-        distribution: 'zulu'
-        java-version: '17'
+      - name: Configurar o Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
 
-    - name: Configurar e Atualizar o Gradle
-      uses: gradle/actions/setup-gradle@v4
+      - name: Configurar e Atualizar o Gradle
+        uses: gradle/actions/setup-gradle@v3
 
-    - name: Localizar Projeto e Buildar APK
-      run: |
-        BUILD_PATH=$(find . -name build.gradle -o -name build.gradle.kts | head -n 1)
-        PROJECT_DIR=$(dirname "$BUILD_PATH")
-        cd "$PROJECT_DIR"
-        gradle assembleDebug --stacktrace --info
-
-    - name: Upload do APK Gerado
-      if: always()
-      uses: actions/upload-artifact@v4
-      with:
-        name: app-debug-apk
-        path: |
-          **/build/outputs/apk/debug/*.apk
       - name: Buildar APK
         run: ./gradlew assembleDebug
