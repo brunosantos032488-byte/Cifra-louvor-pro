@@ -1,97 +1,3 @@
-<!doctype html>
-<html lang="pt-BR">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#123c35" id="meta-theme">
-<meta name="description" content="Cifra Louvor Pro: letras, cifras e repertórios para músicos e igrejas.">
-<link rel="manifest" href="manifest.json">
-<title>Cifra Louvor Pro</title>
-<style>
-:root{--green:#123c35;--mint:#d9f2e9;--accent:#087f68;--ink:#172b28;--muted:#64748b;--line:#dce6e2;--bg:#f5f8f7}
-body.dark-mode{--green:#0b2621;--mint:#1a3a31;--accent:#0ba385;--ink:#f0f5f3;--muted:#94a3b8;--line:#2c3e3a;--bg:#0f1715}
-body.dark-mode .card, body.dark-mode .song, body.dark-mode input, body.dark-mode textarea, body.dark-mode select{background:#16221f;color:var(--ink);border-color:var(--line)}
-body.dark-mode nav{background:#16221f}
-body.dark-mode nav button{color:var(--ink)}
-body.dark-mode nav button.active{background:var(--mint);color:#10b981}
-body.dark-mode .preview{background:#111a18}
-*{box-sizing:border-box}body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;background:var(--bg);color:var(--ink)}
-header{background:var(--green);color:white;padding:18px 16px;padding-top:calc(18px + env(safe-area-inset-top));display:flex;align-items:center;gap:12px}
-.logo{width:48px;height:48px;border-radius:14px;background:var(--mint);color:var(--green);display:grid;place-items:center;font-size:27px;font-weight:800}
-h1{font-size:21px;margin:0}header p{margin:3px 0 0;color:#c9e9df;font-size:13px}
-nav{display:flex;gap:7px;padding:10px;background:#e9f4f0;overflow-x:auto;position:sticky;top:0;z-index:2}
-nav button{border:0;border-radius:9px;padding:10px 12px;background:transparent;color:var(--ink);font-weight:650;white-space:nowrap}
-nav button.active{background:#cdece0;color:#075c4c}
-main{padding:14px;max-width:850px;margin:auto}.page{display:none}.page.active{display:block}
-.card{background:white;border:1px solid var(--line);border-radius:14px;padding:15px;margin:10px 0}
-h2{font-size:20px;margin:0 0 5px}h3{font-size:16px;margin:0 0 10px}.muted{color:var(--muted);font-size:13px}
-label{display:block;font-size:14px;font-weight:650;margin:12px 0 5px}
-input,textarea,select{width:100%;border:1px solid #cbd8d3;border-radius:10px;padding:12px;font:inherit;background:white;color:var(--ink)}
-textarea{min-height:210px;font-family:ui-monospace,SFMono-Regular,Consolas,monospace;line-height:1.7;white-space:pre;overflow:auto}
-button.primary,.primary{background:var(--accent);color:white;border:0;border-radius:10px;padding:12px 15px;font-weight:700}
-button.secondary{background:white;color:var(--green);border:1px solid #b9d0c8;border-radius:10px;padding:11px 13px;font-weight:650}
-body.dark-mode button.secondary{background:#16221f;color:#10b981;border-color:var(--line)}
-.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.song{width:100%;text-align:left;border:1px solid var(--line);background:white;border-radius:12px;padding:13px;margin:7px 0;color:var(--ink)}
-.song strong{display:block}.song small{color:var(--muted)}.pill{background:var(--mint);color:#075c4c;border-radius:7px;padding:3px 8px;font-size:12px;float:right}
-body.dark-mode .pill{color:#10b981}
-.preview{white-space:pre-wrap;overflow-wrap:anywhere;font:18px/1.9 ui-monospace,SFMono-Regular,Consolas,monospace;background:#f8fbfa;padding:13px;border-radius:10px;min-height:170px}
-.chord{color:#087f68;font-weight:800}body.dark-mode .chord{color:#10b981}.hidden{display:none!important}
-footer{text-align:center;padding:22px;color:var(--muted);font-size:12px}
-@media(min-width:650px){main{padding:22px}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}}
-</style>
-</head>
-<body>
-<header><div class="logo">♫</div><div><h1>Cifra Louvor Pro</h1><p>Letras, cifras e adoração</p></div></header>
-<nav>
-<button class="active" data-tab="library">♫ Músicas</button>
-<button data-tab="editor">＋ Nova música</button>
-<button data-tab="stage">▣ Modo culto</button>
-<button data-tab="audio">♪ Áudio</button>
-</nav>
-<main>
-<section class="page active" id="library">
-<h2>Minha biblioteca</h2><p class="muted">Suas músicas ficam salvas neste aparelho.</p>
-<input id="search" placeholder="Buscar música ou cantor…" aria-label="Buscar música">
-<div id="songs"></div>
-<div class="actions"><button class="secondary" id="export">Exportar backup</button><label class="secondary" style="margin:0;display:inline-block;cursor:pointer">Importar backup<input id="import" type="file" accept=".json,application/json" class="hidden"></label></div>
-</section>
-<section class="page" id="editor">
-<h2>Editor de letra e cifra</h2><p class="muted">Digite os acordes na linha acima da letra e use espaços para alinhar.</p>
-<label for="title">Nome da música</label><input id="title" placeholder="Ex.: Meu louvor">
-<label for="artist">Cantor ou grupo (opcional)</label><input id="artist" placeholder="Nome do cantor">
-<label for="key">Tom original</label><select id="key"></select>
-<label for="lyrics">Letra e cifras</label><textarea id="lyrics" spellcheck="false" placeholder="   Dm          Bb
-Senhor, aqui estou
-   F           C
-Quero Te adorar"></textarea>
-<div class="actions"><button class="primary" id="save">Salvar música</button><button class="secondary" id="clear">Limpar</button></div>
-<p class="muted" id="msg" aria-live="polite"></p>
-<div class="card"><h3>Exemplo de visualização</h3><div class="preview" id="editorPreview">As cifras aparecerão aqui.</div></div>
-</section>
-<section class="page" id="stage">
-<h2>Modo culto</h2><p class="muted">Escolha um louvor, ajuste o tom e aumente a letra para ler durante a música.</p>
-<label for="stageSong">Escolher música</label><select id="stageSong"></select>
-<div class="actions">
-<button class="secondary" id="down">− Meio tom</button>
-<button class="secondary" id="up">+ Meio tom</button>
-<button class="secondary" id="reset">Tom original</button>
-<button class="secondary" id="toggle-dark">🌙 Modo Escuro</button>
-<button class="secondary" id="toggle-scroll">▶️ Rolagem</button>
-</div>
-<p><strong>Tom exibido: <span id="currentKey">—</span></strong></p>
-<label for="font">Tamanho da letra</label><input type="range" id="font" min="16" max="34" value="22">
-<div class="preview" id="stageLyrics">Cadastre uma música para começar.</div>
-</section>
-<section class="page" id="audio">
-<h2>Preparar música por áudio</h2><p class="muted">Escolha uma gravação salva no celular para ouvir enquanto prepara a cifra.</p>
-<label for="audioFile">Arquivo de áudio</label><input type="file" id="audioFile" accept="audio/*">
-<audio id="player" controls class="hidden" style="width:100%;margin-top:12px"></audio>
-<p class="muted" id="audioName">Nenhum arquivo selecionado.</p>
-<div class="card"><strong>Sobre a identificação automática</strong><p class="muted">Esta versão reproduz o áudio escolhido, mas ainda não transcreve automaticamente a letra nem detecta acordes. Esse recurso exige uma integração adicional. Você pode transcrever a letra no editor.</p><button class="primary" id="audioEditor">Abrir editor</button></div>
-</section>
-</main>
-<footer>Cifra Louvor Pro • Versão inicial gratuita</footer>
 <script>
 const $=id=>document.getElementById(id);
 let songs=[],editing=null,offset=0,audioURL=null;
@@ -100,7 +6,7 @@ const keys=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B','Cm','C#m','Dm'
 keys.forEach(k=>{let o=document.createElement('option');o.value=k;o.textContent=k;$('key').appendChild(o)});
 try{songs=JSON.parse(localStorage.getItem('clp_songs')||'[]');if(!Array.isArray(songs))songs=[]}catch(e){songs=[]}
 function persist(){try{localStorage.setItem('clp_songs',JSON.stringify(songs));return true}catch(e){return false}}
-function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'''}[c]))}
+function safe(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
 function base(k){return k.endsWith('m')?k.slice(0,-1):k}
 function idx(k){let b=base(k);const flats={Db:'C#',Eb:'D#',Gb:'F#',Ab:'G#',Bb:'A#'};return keys.slice(0,12).indexOf(flats[b]||b)}
 function transposeChord(ch,n){let m=ch.match(/^([A-G](?:#|b)?)(.*)$/);if(!m)return ch;let i=idx(m[1]);if(i<0)return ch;return keys.slice(0,12)[(i+n+120)%12]+m[2]}
@@ -115,3 +21,33 @@ if(id==='library')renderSongs();if(id==='stage')renderStageSelect()
 document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>tabs(b.dataset.tab));
 function renderSongs(){let q=$('search').value.toLowerCase(),box=$('songs');box.innerHTML='';let arr=songs.filter(s=>(s.title+' '+(s.artist||'')).toLowerCase().includes(q));if(!arr.length){box.innerHTML='<div class="card muted">Nenhuma música cadastrada. Toque em “Nova música” para começar.</div>';return}arr.forEach(s=>{let b=document.createElement('button');b.className='song';b.innerHTML='<span class="pill">'+safe(s.key)+'</span><strong>'+safe(s.title)+'</strong><small>'+safe(s.artist||'Artista não informado')+'</small><div class="muted" style="margin-top:7px">Toque para editar</div>';b.onclick=()=>{load(s.id);tabs('editor')};box.appendChild(b)})}
 $('search').oninput=renderSongs;
+function load(id){let s=songs.find(x=>x.id===id);if(!s)return;editing=id;$('title').value=s.title;$('artist').value=s.artist||'';$('key').value=s.key;$('lyrics').value=s.lyrics;$('msg').textContent='Editando música salva.';preview()}
+function clearEditor(){editing=null;$('title').value='';$('artist').value='';$('key').value='C';$('lyrics').value='';$('msg').textContent='';preview()}
+$('clear').onclick=clearEditor;
+$('save').onclick=()=>{let title=$('title').value.trim();if(!title){$('msg').textContent='Digite o nome da música.';$('title').focus();return}let s={id:editing||Date.now().toString(),title,artist:$('artist').value.trim(),key:$('key').value,lyrics:$('lyrics').value};if(editing)songs=songs.map(x=>x.id===editing?s:x);else songs.unshift(s);editing=s.id;let ok=persist();$('msg').textContent=ok?'Música salva neste aparelho.':'Não foi possível salvar. Exporte o backup e libere espaço no aparelho.';renderSongs();renderStageSelect()};
+function preview(){$('editorPreview').innerHTML=formatted($('lyrics').value)||'As cifras aparecerão aqui.'}
+$('lyrics').oninput=preview;$('key').onchange=preview;
+function renderStageSelect(){let sel=$('stageSong'),old=sel.value;sel.innerHTML='';songs.forEach(s=>{let o=document.createElement('option');o.value=s.id;o.textContent=s.title;sel.appendChild(o)});if(songs.some(s=>s.id===old))sel.value=old;offset=0;stage()}
+function stage(){let s=songs.find(x=>x.id===$('stageSong').value);if(!s){$('stageLyrics').textContent='Cadastre uma música para começar.';$('currentKey').textContent='—';return}let i=idx(s.key);$('currentKey').textContent=i<0?s.key:keys.slice(0,12)[(i+offset+120)%12]+(s.key.endsWith('m')?'m':'');$('stageLyrics').innerHTML=formatted(transposeText(s.lyrics,offset))||'Sem letra cadastrada.'}
+$('stageSong').onchange=()=>{offset=0;stage()};$('up').onclick=()=>{offset++;stage()};$('down').onclick=()=>{offset--;stage()};$('reset').onclick=()=>{offset=0;stage()};$('font').oninput=e=>$('stageLyrics').style.fontSize=e.target.value+'px';
+$('audioFile').onchange=e=>{let f=e.target.files[0];if(!f)return;if(audioURL)URL.revokeObjectURL(audioURL);audioURL=URL.createObjectURL(f);$('player').src=audioURL;$('player').classList.remove('hidden');$('audioName').textContent=f.name+' • '+(f.size/1048576).toFixed(1)+' MB'};
+$('audioEditor').onclick=()=>tabs('editor');
+$('export').onclick=()=>{let blob=new Blob([JSON.stringify(songs,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='cifra-louvor-pro-backup.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
+$('import').onchange=async e=>{let f=e.target.files[0];if(!f)return;try{let data=JSON.parse(await f.text());if(!Array.isArray(data)||!data.every(s=>s.title&&s.key&&typeof s.lyrics==='string'))throw Error();songs=data.map((s,i)=>({...s,id:String(s.id||Date.now()+i)}));persist();renderSongs();renderStageSelect();alert('Backup importado.')}catch(err){alert('Arquivo inválido. Use um backup exportado pelo Cifra Louvor Pro.')}e.target.value=''};
+
+$('toggle-dark').onclick=()=>{
+document.body.classList.toggle('dark-mode');
+let isDark = document.body.classList.contains('dark-mode');
+$('toggle-dark').textContent = isDark ? '☀️ Modo Claro' : '🌙 Modo Escuro';
+$('meta-theme').setAttribute('content', isDark ? '#0b2621' : '#123c35');
+};
+
+function pararRolagem(){clearInterval(scrollInterval);isScrolling=false;$('toggle-scroll').textContent='▶️ Rolagem'}
+$('toggle-scroll').onclick=()=>{
+if(isScrolling){pararRolagem()}else{isScrolling=true;$('toggle-scroll').textContent='⏸️ Parar';
+scrollInterval=setInterval(()=>{window.scrollBy(0,1);if((window.innerHeight+window.scrollY)>=document.body.offsetHeight){pararRolagem()}},40)}
+};
+
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+renderSongs();renderStageSelect();preview();
+</script>
