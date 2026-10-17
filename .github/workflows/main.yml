@@ -26,6 +26,8 @@ jobs:
           rm -f build.gradle settings.gradle gradle.properties
           npx cap init "Cifra Louvor Pro" "com.brunosantos.cifralouvor" --web-dir=www
           npx cap add android
+          mkdir -p android/app/src/main/assets
+          touch android/app/src/main/assets/capacitor.plugins.json
           npx cap sync
 
       - name: Configurar o Java 17
@@ -37,7 +39,7 @@ jobs:
       - name: Compilar APK com Gradle
         run: |
           cd android
-          chmod +x gradlew
+          chmod +x ./gradlew
           ./gradlew assembleDebug
 
       - name: Disponibilizar APK para Download
