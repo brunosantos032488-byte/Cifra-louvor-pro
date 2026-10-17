@@ -20,20 +20,21 @@ jobs:
         distribution: 'zulu'
         java-version: '17'
 
-    - name: Dar permissao de execucao para o Gradle
+    - name: Instalar o Gradle no Servidor
       run: |
-        GRADLEW_PATH=$(find . -name gradlew)
-        if [ -z "$GRADLEW_PATH" ]; then
-          echo "Erro: Arquivo gradlew nao foi encontrado no repositorio!"
+        sudo apt-get update
+        sudo apt-get install -y gradle
+
+    - name: Localizar o arquivo build.gradle e Buildar APK
+      run: |
+        BUILD_PATH=$(find . -name build.gradle -o -name build.gradle.kts | head -n 1)
+        if [ -z "$BUILD_PATH" ]; then
+          echo "Erro: Nenhum arquivo build.gradle encontrado no projeto!"
           exit 1
         fi
-        chmod +x "$GRADLEW_PATH"
-        echo "SUBPASTA_CONTEUDO=$(dirname "$GRADLEW_PATH")" >> $GITHUB_ENV
-
-    - name: Build APK
-      run: |
-        cd ${{ env.SUBPASTA_CONTEUDO }}
-        ./gradlew assembleDebug
+        PROJECT_DIR=$(dirname "$BUILD_PATH")
+        cd "$PROJECT_DIR"
+        gradle assembleDebug
 
     - name: Upload do APK Gerado
       uses: actions/upload-artifact@v4
